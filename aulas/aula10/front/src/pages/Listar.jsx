@@ -3,8 +3,10 @@ import Cabecalho from "../components/Cabecalho";
 import Conteudo from "../components/Conteudo";
 import Listagem from "./Listagem";
 import { buscarTodos, remover } from "../services/ContatoService";
+import { useNavigate } from "react-router-dom";
 
 function Listar() {
+  const navigate = useNavigate();
   const [contatos, setContatos] = useState([]);
   const [erro, setErro] = useState("");
 
@@ -18,6 +20,11 @@ function Listar() {
       setErro(resultado.mensagem);
     }
   };
+
+
+  const onEditar = (id) => {
+    navigate(`/editar/${id}`);
+  }
 
   const onRemover = async (id) => {
     const resultado = await remover(id);
@@ -38,7 +45,7 @@ function Listar() {
       <Conteudo>
         {erro && <p>{erro}</p>}
         <h2>Lista de Contatos</h2>
-        <Listagem itens={contatos} onRemover={onRemover} />
+        <Listagem itens={contatos} onEditar={onEditar} onRemover={onRemover} />
       </Conteudo>
     </>
   );

@@ -14,7 +14,12 @@ return axios
 }
 
 function buscar(id) {
-
+    return axios.get(`${url}/${id}`).then((response) => {
+        return { sucesso: true, dados: response.data };
+    })
+    .catch((error) => { 
+        return { sucesso: false, mensagem: error.message };
+    });
 }
 
 function adicionar(contato) {
@@ -24,14 +29,24 @@ function adicionar(contato) {
 }
 
 function atualizar (contato) {
-
+return axios.put(`${url}/${contato.id}`, {
+    nome: contato.nome,
+    telefone: contato.telefone,
+    
+})
+.then((response) => {
+    return { sucesso: true, dados: response.data };
+})
+.catch((error) => {
+    return { sucesso: false, mensagem: error.message };
+});
 }
 
 function remover (id) {
     return axios
     .delete(`${url}/${id}`)
-    .then((reponse) => {
-        return { sucesso: true, dados: responde.data };
+    .then((response) => {
+        return { sucesso: true, dados: response.data };
     })
     .catch((error) => {
         return { sucesso: false, mensagem: error.message };
